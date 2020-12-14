@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import sun.font.TextRecord;
 
 import javax.jnlp.ClipboardService;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class TesteFilme {
 
         Thread.sleep(2000);
 
-        //Verifica comportamento do item de menu cadastrar novo filme
+        //clica no item de menu cadastrar novo filme
         driver.findElement(By.linkText("Cadastrar novo Filme")).click();
 
         String titulo = driver.getTitle();
@@ -58,15 +59,39 @@ public class TesteFilme {
             for(Filme f : filme.filmes){
                 System.out.println(f.toString());
             }
+            System.out.println("Filme cadastrado com sucesso");
 
             driver.findElement(By.xpath("/html/body/form/input[6]")).click();
 
             Thread.sleep(2000);
 
-
         } else {
             System.out.println("Estamos na página errada");
 
+        }
+
+        //clica no item de menu cadastrar novo filme
+        driver.findElement(By.linkText("Listar um Filme")).click();
+
+        driver.findElement(By.id("codigo")).sendKeys("1");
+
+        Integer codigo = Integer.parseInt(driver.findElement(By.id("codigo")).getAttribute("value"));
+
+        Filme buscaFilme = filme.buscarFilme(filme.filmes, codigo);
+
+        driver.findElement(By.xpath("/html/body/form/input[2]")).click();
+        Thread.sleep(2000);
+
+        //altera a variável título para verificação da página
+        titulo = driver.getTitle();
+        if(titulo.equals("Lista Filmes")) {
+            System.out.println("Estamos na página correta");
+            //driver.findElement(By.id("codigo")).sendKeys("1");
+            driver.findElement(By.id("nome")).sendKeys(buscaFilme.getNome());
+            driver.findElement(By.id("lancamento")).sendKeys(String.valueOf(buscaFilme.getAno_de_lancamento()));
+            driver.findElement(By.id("diretor")).sendKeys(buscaFilme.getDiretor());
+            driver.findElement(By.id("ator")).sendKeys(buscaFilme.getAtor());
+            Thread.sleep(2000);
         }
 
         driver.close();
