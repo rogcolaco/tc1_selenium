@@ -81,7 +81,7 @@ public class Sala {
                 "\n#######\n";
     }
 
-    public ArrayList<Sala> carregaSalas(){
+    /*public ArrayList<Sala> carregaSalas(){
         ArrayList carregaArraySala = new ArrayList();
 
         carregaArraySala.add(new Sala(1,20,"Sala 1","2D","(16)3351-1010",true));
@@ -93,7 +93,7 @@ public class Sala {
         carregaArraySala.add(new Sala(7,25,"Sala 7","3D","(16)3351-1070", false));
 
         return carregaArraySala;
-    }
+    }*/
 
     public Sala buscarSala(ArrayList<Sala> salas){
         Scanner scanner = new Scanner(System.in);

@@ -75,7 +75,7 @@ public class Filme {
         return filmes;
     }
 
-    public ArrayList<Filme> carregaFilmes(ArrayList<Filme> filmes){
+    /*public ArrayList<Filme> carregaFilmes(ArrayList<Filme> filmes){
 
         this.filmes.add(new Filme(1,1999,"Matrix","Lilly Wachowski","Keanu Reeves"));
         this.filmes.add(new Filme(2,2014,"Guardiões da Galáxia","James Gunn","Chris Pratt"));
@@ -86,7 +86,7 @@ public class Filme {
         this.filmes.add(new Filme(7,1991,"A Família Addams","Barry Sonnenfeld","Anjelica Huston"));
 
         return this.filmes;
-    }
+    }*/
 
     public Filme buscarFilme(ArrayList<Filme> filmes){
         Scanner scanner = new Scanner(System.in);
