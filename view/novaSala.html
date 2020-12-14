@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Salas</title>
+</head>
+
+<body>
+    <h1>Cadastro de novas Salas</h1>
+
+    <form>
+        <label for="codigo">Código: </label>
+        <input type="text" id="codigo" name="codigo" required><br><br>
+        <label for="nome">Nome: </label>
+        <input type="text" id="nome" name="nome"><br><br>
+        <label for="capacidade">Capacidade: </label>
+        <input type="text" id="capacidade" name="capacidade"><br><br>
+        <fieldset>
+            <legend>Tipo de Exibição</legend>
+            <input type="checkbox" id="2d" name="tpExibicao[]" value="2d">
+            <label for="2d"> 2D</label><br>
+            <input type="checkbox" id="3d" name="tpExibicao[]" value="3d">
+            <label for="3d"> 3D</label><br>
+            <input type="checkbox" id="Outros" name="tpExibicao[]" value="Outros">
+            <label for="Outros"> Outros</label><br><br>
+        </fieldset>
+        <fieldset>
+            <legend>Sala Acessível</legend>
+            <input type="radio" id="true" name="pref" value="true">
+	        <label for="true"> Sim</label><br>
+	        <input type="radio" id="false" name="pref"  value="false">
+	        <label for="false"> Não</label><br>
+        </fieldset>
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+
+</html>
