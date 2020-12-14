@@ -59,6 +59,10 @@ public class TesteFilme {
                 System.out.println(f.toString());
             }
 
+            driver.findElement(By.xpath("/html/body/form/input[6]")).click();
+
+            Thread.sleep(2000);
+
 
         } else {
             System.out.println("Estamos na página errada");
