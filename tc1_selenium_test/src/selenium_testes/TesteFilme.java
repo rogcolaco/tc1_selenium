@@ -3,6 +3,7 @@ package selenium_testes;
 import com.sun.org.apache.xml.internal.resolver.helpers.BootstrapResolver;
 import model.Filme;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -78,6 +79,7 @@ public class TesteFilme {
         Integer codigo = Integer.parseInt(driver.findElement(By.id("codigo")).getAttribute("value"));
 
         Filme buscaFilme = filme.buscarFilme(filme.filmes, codigo);
+        Thread.sleep(2000);
 
         driver.findElement(By.xpath("/html/body/form/input[2]")).click();
         Thread.sleep(2000);
@@ -86,7 +88,13 @@ public class TesteFilme {
         titulo = driver.getTitle();
         if(titulo.equals("Lista Filmes")) {
             System.out.println("Estamos na página correta");
-            //driver.findElement(By.id("codigo")).sendKeys("1");
+            driver.findElement(By.id("codigo")).sendKeys("1");
+
+            //JS incluí o atributo readonly no campo "código" do formulário
+            JavascriptExecutor js = (JavascriptExecutor)driver;
+            WebElement codigoElement = driver.findElement(By.id("codigo"));
+            js.executeScript("document.getElementById('codigo').setAttribute('readonly',true)",codigoElement);
+
             driver.findElement(By.id("nome")).sendKeys(buscaFilme.getNome());
             driver.findElement(By.id("lancamento")).sendKeys(String.valueOf(buscaFilme.getAno_de_lancamento()));
             driver.findElement(By.id("diretor")).sendKeys(buscaFilme.getDiretor());
