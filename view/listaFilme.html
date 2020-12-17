@@ -1,27 +1,32 @@
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="../style.css">
     <title>Lista Filmes</title>
 </head>
 
-<body>
+<body class="container">
     <h1>Lista Filme</h1>
 
     <form>
-        <!-- Nessa janela o campo de código deveria estar desabilitado mas como fazer isso sem usar o disable?-->
-        <label for="codigo">Código: </label>
-        <input type="text" id="codigo" name="codigo"><br><br>
-        <label for="nome">Nome do Filme: </label>
-        <input type="text" id="nome" name="nome"><br><br>
-        <label for="lancamento">Ano de Lançamento: </label>
-        <input type="text" id="lancamento" name="lancamento"><br><br>
-        <label for="diretor">Nome do diretor: </label>
-        <input type="text" id="diretor" name="diretor"><br><br>
-        <label for="ator">Atriz/Ator Principal: </label>
-        <input type="text" id="ator" name="ator"><br><br>
-        <input type="submit" value="Voltar">
-        <input type="submit" value="Alterar">
-        <input type="submit" value="Deletar">
+        <!-- classe readonly inserida no código no arquivo de testes-->
+        <label for="codigo" class="form-label">Código: </label>
+        <input type="text" id="codigo" name="codigo" class="form-control" required><br>
+        <label for="nome" class="form-label">Nome do Filme: </label>
+        <input type="text" id="nome" name="nome" class="form-control"><br>
+        <label for="lancamento" class="form-label">Ano de Lançamento: </label>
+        <input type="text" id="lancamento" name="lancamento" class="form-control"><br>
+        <label for="diretor" class="form-label">Nome do diretor: </label>
+        <input type="text" id="diretor" name="diretor" class="form-control"><br>
+        <label for="ator" class="form-label">Atriz/Ator Principal: </label>
+        <input type="text" id="ator" name="ator" class="form-control"><br>
     </form>
+    <a href="./index.html" class="buttonLink">Voltar</a>
+    <a href="#" class="buttonLink">Alterar Item</a>
+    <a href="#" class="buttonLink">Apagar item</a>
 </body>
 
 </html>
