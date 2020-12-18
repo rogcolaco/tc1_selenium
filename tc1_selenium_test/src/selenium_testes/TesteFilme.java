@@ -74,7 +74,7 @@ public class TesteFilme {
 
         }
 
-        //clica no item de menu cadastrar novo filme
+        //clica no item de menu seleciona Filme
         driver.findElement(By.linkText("Listar um Filme")).click();
 
         driver.findElement(By.id("codigo")).sendKeys("5");
@@ -130,7 +130,6 @@ public class TesteFilme {
             System.out.println(filme.buscarFilme(filme.filmes, 5));
 
             Thread.sleep(2000);
-
         }
 
         driver.close();
