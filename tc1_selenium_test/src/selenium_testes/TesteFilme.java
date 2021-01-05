@@ -18,6 +18,8 @@ public class TesteFilme {
         Filme filme = new Filme();
         //ArrayList<Filme> filmes;
 
+        filme.filmes=filme.carregaFilmes(filme.filmes);
+
         //INFORMA O DIRETORIO DO MOTOR CHROME PARA O SELENIUM
         String userPath = System.getProperty("user.dir");
         String chromeDriverPath = userPath + "/lib/chromeDriver/chromedriver.exe";
@@ -37,11 +39,12 @@ public class TesteFilme {
         String titulo = driver.getTitle();
         if(titulo.equals("Cadastrar Novo Filme")){
             System.out.println("Estamos na página correta");
-            driver.findElement(By.id("codigo")).sendKeys("1");
-            driver.findElement(By.id("nome")).sendKeys("O Poderoso Chefão");
-            driver.findElement(By.id("lancamento")).sendKeys("1970");
-            driver.findElement(By.id("diretor")).sendKeys("Coppolla");
-            driver.findElement(By.id("ator")).sendKeys("Marlon Brando");
+            driver.findElement(By.id("codigo")).sendKeys("7");
+            driver.findElement(By.id("nome")).sendKeys("A Família Addams");
+            driver.findElement(By.id("lancamento")).sendKeys("1991");
+            driver.findElement(By.id("diretor")).sendKeys("Barry Sonnenfeld");
+            driver.findElement(By.id("ator")).sendKeys("Anjelica Huston");
+
 
             Thread.sleep(1000);
 
@@ -71,10 +74,11 @@ public class TesteFilme {
 
         }
 
-        //clica no item de menu cadastrar novo filme
+        //clica no item de menu seleciona Filme
         driver.findElement(By.linkText("Listar um Filme")).click();
 
-        driver.findElement(By.id("codigo")).sendKeys("1");
+        driver.findElement(By.id("codigo")).sendKeys("5");
+        Thread.sleep(2000);
 
         Integer codigo = Integer.parseInt(driver.findElement(By.id("codigo")).getAttribute("value"));
 
@@ -88,7 +92,7 @@ public class TesteFilme {
         titulo = driver.getTitle();
         if(titulo.equals("Lista Filmes")) {
             System.out.println("Estamos na página correta");
-            driver.findElement(By.id("codigo")).sendKeys("1");
+            driver.findElement(By.id("codigo")).sendKeys("5");
 
             //JS incluí o atributo readonly no campo "código" do formulário
             JavascriptExecutor js = (JavascriptExecutor)driver;
@@ -100,8 +104,75 @@ public class TesteFilme {
             driver.findElement(By.id("diretor")).sendKeys(buscaFilme.getDiretor());
             driver.findElement(By.id("ator")).sendKeys(buscaFilme.getAtor());
             Thread.sleep(2000);
+
+            //Alterando os dados do filme listado
+            driver.findElement(By.id("nome")).clear();
+            driver.findElement(By.id("nome")).sendKeys("Os Caçadores da Arca Perdida");
+            driver.findElement(By.id("lancamento")).clear();
+            driver.findElement(By.id("lancamento")).sendKeys("1981");
+            driver.findElement(By.id("diretor")).clear();
+            driver.findElement(By.id("diretor")).sendKeys("Steven Spielberg");
+            driver.findElement(By.id("ator")).clear();
+            driver.findElement(By.id("ator")).sendKeys("Harrison Ford");
+
+            Filme novofilme = new Filme(
+                    Integer.parseInt(driver.findElement(By.id("codigo")).getAttribute("value")),
+                    Integer.parseInt(driver.findElement(By.id("lancamento")).getAttribute("value")),
+                    driver.findElement(By.id("nome")).getAttribute("value"),
+                    driver.findElement(By.id("diretor")).getAttribute("value"),
+                    driver.findElement(By.id("ator")).getAttribute("value")
+            );
+
+            filme.alteraFilme(filme.filmes, novofilme);
+            driver.findElement(By.linkText("Alterar Item")).click();
+
+            //Impressão no terminal apenas para confirmar alteração
+            System.out.println(filme.buscarFilme(filme.filmes, 5));
+
+            Thread.sleep(2000);
         }
 
+        //clica no item de menu seleciona Filme
+        driver.findElement(By.linkText("Listar um Filme")).click();
+
+        driver.findElement(By.id("codigo")).sendKeys("5");
+        Thread.sleep(2000);
+
+        codigo = Integer.parseInt(driver.findElement(By.id("codigo")).getAttribute("value"));
+
+        buscaFilme = filme.buscarFilme(filme.filmes, codigo);
+        Thread.sleep(2000);
+
+        driver.findElement(By.xpath("/html/body/form/input[2]")).click();
+        Thread.sleep(2000);
+
+        //altera a variável título para verificação da página
+        titulo = driver.getTitle();
+        if(titulo.equals("Lista Filmes")) {
+            System.out.println("Estamos na página correta");
+            driver.findElement(By.id("codigo")).sendKeys("5");
+
+            //JS incluí o atributo readonly no campo "código" do formulário
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            WebElement codigoElement = driver.findElement(By.id("codigo"));
+            js.executeScript("document.getElementById('codigo').setAttribute('readonly',true)", codigoElement);
+
+            driver.findElement(By.id("nome")).sendKeys(buscaFilme.getNome());
+            driver.findElement(By.id("lancamento")).sendKeys(String.valueOf(buscaFilme.getAno_de_lancamento()));
+            driver.findElement(By.id("diretor")).sendKeys(buscaFilme.getDiretor());
+            driver.findElement(By.id("ator")).sendKeys(buscaFilme.getAtor());
+            Thread.sleep(2000);
+
+            filme.deletaFilme(filme.filmes, codigo);
+            driver.findElement(By.linkText("Apagar Item")).click();
+
+            //Print no terminal para confirmar exclusão do filme
+            //valor esperado "null"
+            System.out.println(filme.buscarFilme(filme.filmes, 5));
+
+        }
+
+        Thread.sleep(2000);
         driver.close();
 
     }

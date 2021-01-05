@@ -75,7 +75,7 @@ public class Filme {
         return filmes;
     }
 
-    /*public ArrayList<Filme> carregaFilmes(ArrayList<Filme> filmes){
+    public ArrayList<Filme> carregaFilmes(ArrayList<Filme> filmes){
 
         this.filmes.add(new Filme(1,1999,"Matrix","Lilly Wachowski","Keanu Reeves"));
         this.filmes.add(new Filme(2,2014,"Guardiões da Galáxia","James Gunn","Chris Pratt"));
@@ -83,10 +83,9 @@ public class Filme {
         this.filmes.add(new Filme(4,2019,"Midsommar: O Mal Não Espera a Noite","Ari Aster"," Florence Pugh"));
         this.filmes.add(new Filme(5,2017,"It: A Coisa","Andy Muschietti","Bill Skarsgård"));
         this.filmes.add(new Filme(6,1988,"Os Fantasmas se Divertem","Tim Burton","Alec Baldwin"));
-        this.filmes.add(new Filme(7,1991,"A Família Addams","Barry Sonnenfeld","Anjelica Huston"));
 
         return this.filmes;
-    }*/
+    }
 
     public Filme buscarFilme(ArrayList<Filme> filmes, Integer codigo){
 
@@ -109,19 +108,13 @@ public class Filme {
     }
 
     public void alteraFilme(ArrayList<Filme> filmes, Filme filme){
-        Scanner scanner = new Scanner(System.in);
 
         for (Filme f : filmes) {
             if (f.codigo == filme.codigo){
-                System.out.println("\nInforme o ano de lançamento do filme:");
-                f.setAno_de_lancamento(Integer.parseInt(scanner.nextLine()));
-                System.out.println("\nInforme o nome do filme:");
-                f.setNome(scanner.nextLine());
-                System.out.println("\nInforme o nome do diretor filme:");
-                f.setDiretor(scanner.nextLine());
-                System.out.println("\nInforme o nome ator principal do filme:");
-                f.setAtor(scanner.nextLine());
-                System.out.println("\n ### Filme alterado com sucesso ###\n");
+                f.setNome(filme.nome);
+                f.setDiretor(filme.diretor);
+                f.setAno_de_lancamento(filme.ano_de_lancamento);
+                f.setAtor(filme.ator);
                 break;
             }
         }
