@@ -132,6 +132,47 @@ public class TesteFilme {
             Thread.sleep(2000);
         }
 
+        //clica no item de menu seleciona Filme
+        driver.findElement(By.linkText("Listar um Filme")).click();
+
+        driver.findElement(By.id("codigo")).sendKeys("5");
+        Thread.sleep(2000);
+
+        codigo = Integer.parseInt(driver.findElement(By.id("codigo")).getAttribute("value"));
+
+        buscaFilme = filme.buscarFilme(filme.filmes, codigo);
+        Thread.sleep(2000);
+
+        driver.findElement(By.xpath("/html/body/form/input[2]")).click();
+        Thread.sleep(2000);
+
+        //altera a variável título para verificação da página
+        titulo = driver.getTitle();
+        if(titulo.equals("Lista Filmes")) {
+            System.out.println("Estamos na página correta");
+            driver.findElement(By.id("codigo")).sendKeys("5");
+
+            //JS incluí o atributo readonly no campo "código" do formulário
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            WebElement codigoElement = driver.findElement(By.id("codigo"));
+            js.executeScript("document.getElementById('codigo').setAttribute('readonly',true)", codigoElement);
+
+            driver.findElement(By.id("nome")).sendKeys(buscaFilme.getNome());
+            driver.findElement(By.id("lancamento")).sendKeys(String.valueOf(buscaFilme.getAno_de_lancamento()));
+            driver.findElement(By.id("diretor")).sendKeys(buscaFilme.getDiretor());
+            driver.findElement(By.id("ator")).sendKeys(buscaFilme.getAtor());
+            Thread.sleep(2000);
+
+            filme.deletaFilme(filme.filmes, codigo);
+            driver.findElement(By.linkText("Apagar Item")).click();
+
+            //Print no terminal para confirmar exclusão do filme
+            //valor esperado "null"
+            System.out.println(filme.buscarFilme(filme.filmes, 5));
+
+        }
+
+        Thread.sleep(2000);
         driver.close();
 
     }
