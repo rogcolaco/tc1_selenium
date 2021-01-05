@@ -11,6 +11,11 @@ body{
     text-decoration: none;
 }
 
+.buttonLink:disabled{
+    background:#ccc;
+    color: #666;
+}
+
 .buttonLink:hover{
     background:#084298;
     color: #fff;

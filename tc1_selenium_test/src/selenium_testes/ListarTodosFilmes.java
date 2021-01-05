@@ -2,7 +2,9 @@ package selenium_testes;
 
 import model.Filme;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import sun.management.snmp.jvmmib.JVM_MANAGEMENT_MIBOidTable;
 
@@ -75,7 +77,19 @@ public class ListarTodosFilmes {
             driver.findElement(By.linkText("Listar todos os Filmes")).click();
             driver.get(url);
 
-            for (int i = 0; i < todosFilmes.size();) {
+            Integer i = 0;
+
+            while(i < todosFilmes.size()){
+                if (i == 0 ){
+                    //JS incluí o atributo readonly no campo "código" do formulário
+                    JavascriptExecutor js = (JavascriptExecutor) driver;
+                    WebElement codigoElement = driver.findElement(By.id("anterior"));
+                    js.executeScript("document.getElementById('anterior').setAttribute('disabled',true)", codigoElement);
+                }
+
+            }
+
+            /*for (int i = 0; i < todosFilmes.size();) {
                 if (i == 0){
                     System.out.println("primeiro elemento");
                     i++;
@@ -86,7 +100,7 @@ public class ListarTodosFilmes {
                     System.out.println("chegamos ao último");
                     i--;
                 }
-            }
+            }*/
         }
     }
 }
