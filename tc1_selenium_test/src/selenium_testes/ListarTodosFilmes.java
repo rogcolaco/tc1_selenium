@@ -6,7 +6,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import sun.management.snmp.jvmmib.JVM_MANAGEMENT_MIBOidTable;
 
 import java.util.ArrayList;
 
@@ -57,7 +56,7 @@ public class ListarTodosFilmes {
 
     private static void verificaListaFilmes(ArrayList<Filme> todosFilmes, String url, WebDriver driver) throws InterruptedException {
         if (todosFilmes.isEmpty()) {
-            System.out.println("lista vazia");
+            // LISTA VAZIA
             url = "http://localhost/view/nullFilmes.html";
             driver.findElement(By.linkText("Listar todos os Filmes")).click();
             driver.get(url);
@@ -72,33 +71,26 @@ public class ListarTodosFilmes {
             Thread.sleep(2000);
 
         } else {
-            System.out.println("lista com elementos");
+            // OCORRE SOMENTE SE A LISTA TIVER ELEMENTOS
             url = "http://localhost/view/todosFilmes.html";
             driver.findElement(By.linkText("Listar todos os Filmes")).click();
             driver.get(url);
 
             Integer i = 0;
 
-            StringBuilder f = new StringBuilder();
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            WebElement codigoElement = driver.findElement(By.id("novoTeste"));
 
             while (i < todosFilmes.size()) {
                 String codigo =String.valueOf(todosFilmes.get(i).getCodigo());
                 String titulo = String.valueOf(todosFilmes.get(i).getNome());
                 String ano = String.valueOf(todosFilmes.get(i).getAno_de_lancamento());
-                String diretor = todosFilmes.get(i).getDiretor();
+                String diretor = String.valueOf(todosFilmes.get(i).getDiretor());
                 String ator = todosFilmes.get(i).getAtor();
-//                String s = "Código: " + codigo + " || Título: " + titulo + " || Diretor: " + diretor + " || Ator/Atriz principal: " + ator + " || Ano de lançamento: " + ano;
-//                StringBuilder f = new StringBuilder("Código: " + codigo + " || Título: " + titulo + " || Diretor: " + diretor + " || Ator/Atriz principal: " + ator + " || Ano de lançamento: " + ano);
-//                String s = "Codigo: " + codigo;
-//                StringBuffer f = new StringBuffer();
-                f.append("Codigo: ");
-                f.append(codigo);
-//                String f = codigo +" ||||| " +ano;
-                System.out.println(f);
+                String f = "Código: " + codigo + " || Título: " + titulo + " || Diretor: " + diretor + " || Ator/Atriz principal: " + ator + " || Ano de lançamento: " + ano;
+//                System.out.println(f);
 
-                JavascriptExecutor js = (JavascriptExecutor) driver;
-                WebElement codigoElement = driver.findElement(By.id("novoTeste"));
-                js.executeScript("var texto = " + f + ";" +
+                js.executeScript("var texto = " + " \""+f+"\" " + ";" +
                         "var para = document.createElement(\"p\");\n" +
                         "var node = document.createTextNode(texto);\n" +
                         "para.appendChild(node);\n" +
