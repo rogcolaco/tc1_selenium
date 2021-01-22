@@ -79,19 +79,21 @@ public class ListarTodosFilmes {
 
             Integer i = 0;
 
+            StringBuilder f = new StringBuilder();
+
             while (i < todosFilmes.size()) {
                 String codigo =String.valueOf(todosFilmes.get(i).getCodigo());
                 String titulo = String.valueOf(todosFilmes.get(i).getNome());
                 String ano = String.valueOf(todosFilmes.get(i).getAno_de_lancamento());
                 String diretor = todosFilmes.get(i).getDiretor();
                 String ator = todosFilmes.get(i).getAtor();
-                //String s = "Código: " + codigo + " || Título: " + titulo + " || Diretor: " + diretor + " || Ator/Atriz principal: " + ator + " || Ano de lançamento: " + ano;
-                //StringBuilder f = new StringBuilder("Código: " + codigo + " || Título: " + titulo + " || Diretor: " + diretor + " || Ator/Atriz principal: " + ator + " || Ano de lançamento: " + ano);
-                //String s = "Codigo: " + codigo;
+//                String s = "Código: " + codigo + " || Título: " + titulo + " || Diretor: " + diretor + " || Ator/Atriz principal: " + ator + " || Ano de lançamento: " + ano;
+//                StringBuilder f = new StringBuilder("Código: " + codigo + " || Título: " + titulo + " || Diretor: " + diretor + " || Ator/Atriz principal: " + ator + " || Ano de lançamento: " + ano);
+//                String s = "Codigo: " + codigo;
 //                StringBuffer f = new StringBuffer();
-//                f.append("Codigo: ");
-//                f.append(codigo);
-                String f = codigo +" ||||| " +ano;
+                f.append("Codigo: ");
+                f.append(codigo);
+//                String f = codigo +" ||||| " +ano;
                 System.out.println(f);
 
                 JavascriptExecutor js = (JavascriptExecutor) driver;
