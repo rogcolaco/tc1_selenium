@@ -1,22 +1,17 @@
 package selenium_testes;
 
-import com.sun.org.apache.xml.internal.resolver.helpers.BootstrapResolver;
 import model.Filme;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import sun.font.TextRecord;
 
-import javax.jnlp.ClipboardService;
-import java.util.ArrayList;
 
 public class TesteFilme {
 
     public static void main(String[] args) throws InterruptedException {
         Filme filme = new Filme();
-        //ArrayList<Filme> filmes;
 
         filme.filmes=filme.carregaFilmes(filme.filmes);
 

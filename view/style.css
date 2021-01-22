@@ -11,6 +11,11 @@ body{
     text-decoration: none;
 }
 
+.buttonLink:disabled{
+    background:#ccc;
+    color: #666;
+}
+
 .buttonLink:hover{
     background:#084298;
     color: #fff;
@@ -28,4 +33,8 @@ body{
 .btn-primary a{
     color: #fff;
     text-decoration: none;
+}
+
+.botoes{
+    margin-top: 50px;
 }
