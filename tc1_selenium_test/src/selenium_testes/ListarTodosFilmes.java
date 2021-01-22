@@ -17,7 +17,7 @@ public class ListarTodosFilmes {
         Filme filme = new Filme();
 
         //Iniciando o teste com uma lista vazia
-        ArrayList <Filme> todosFilmes = filme.filmes;
+        ArrayList<Filme> todosFilmes = filme.filmes;
 
         //INFORMA O DIRETORIO DO MOTOR CHROME PARA O SELENIUM
         String userPath = System.getProperty("user.dir");
@@ -44,7 +44,7 @@ public class ListarTodosFilmes {
 
         String titulo = driver.getTitle();
         // Teste para verificar se voltamos ao menu principal de forma a evitar erros
-        if(titulo.equals("Menu Principal Cinema")){
+        if (titulo.equals("Menu Principal Cinema")) {
             //Chama método responsável por verificar se existe filmes cadastrados
             //e navegar pelas páginas
             ListarTodosFilmes.verificaListaFilmes(todosFilmes, url, driver);
@@ -56,7 +56,7 @@ public class ListarTodosFilmes {
     }
 
     private static void verificaListaFilmes(ArrayList<Filme> todosFilmes, String url, WebDriver driver) throws InterruptedException {
-        if(todosFilmes.isEmpty()){
+        if (todosFilmes.isEmpty()) {
             System.out.println("lista vazia");
             url = "http://localhost/view/nullFilmes.html";
             driver.findElement(By.linkText("Listar todos os Filmes")).click();
@@ -79,28 +79,31 @@ public class ListarTodosFilmes {
 
             Integer i = 0;
 
-            while(i < todosFilmes.size()){
-                if (i == 0 ){
-                    //JS incluí o atributo readonly no campo "código" do formulário
-                    JavascriptExecutor js = (JavascriptExecutor) driver;
-                    WebElement codigoElement = driver.findElement(By.id("anterior"));
-                    js.executeScript("document.getElementById('anterior').setAttribute('disabled',true)", codigoElement);
-                }
+            while (i < todosFilmes.size()) {
+                String codigo =String.valueOf(todosFilmes.get(i).getCodigo());
+                String titulo = String.valueOf(todosFilmes.get(i).getNome());
+                String ano = String.valueOf(todosFilmes.get(i).getAno_de_lancamento());
+                String diretor = todosFilmes.get(i).getDiretor();
+                String ator = todosFilmes.get(i).getAtor();
+                //String s = "Código: " + codigo + " || Título: " + titulo + " || Diretor: " + diretor + " || Ator/Atriz principal: " + ator + " || Ano de lançamento: " + ano;
+                //StringBuilder f = new StringBuilder("Código: " + codigo + " || Título: " + titulo + " || Diretor: " + diretor + " || Ator/Atriz principal: " + ator + " || Ano de lançamento: " + ano);
+                //String s = "Codigo: " + codigo;
+//                StringBuffer f = new StringBuffer();
+//                f.append("Codigo: ");
+//                f.append(codigo);
+                String f = codigo +" ||||| " +ano;
+                System.out.println(f);
 
+                JavascriptExecutor js = (JavascriptExecutor) driver;
+                WebElement codigoElement = driver.findElement(By.id("novoTeste"));
+                js.executeScript("var texto = " + f + ";" +
+                        "var para = document.createElement(\"p\");\n" +
+                        "var node = document.createTextNode(texto);\n" +
+                        "para.appendChild(node);\n" +
+                        "var element = document.getElementById(\"novoTeste\");\n" +
+                        "element.appendChild(para);", codigoElement);
+                i=i+1;
             }
-
-            /*for (int i = 0; i < todosFilmes.size();) {
-                if (i == 0){
-                    System.out.println("primeiro elemento");
-                    i++;
-                } else  if (i < todosFilmes.size()-1){
-                    System.out.println("não chegou no último");
-                    i++;
-                } else{
-                    System.out.println("chegamos ao último");
-                    i--;
-                }
-            }*/
         }
     }
 }
