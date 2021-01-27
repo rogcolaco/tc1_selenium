@@ -1,10 +1,9 @@
 package selenium_testes;
 
 import model.Sala;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -93,8 +92,6 @@ public class TesteSala {
                     tipoExibicao
             );
 
-//            System.out.println(novaSala.getTipoExibicao().get("2d"));
-
             sala.incluirSala(sala.salas, novaSala);
 
             //Print no terminal apenas para confirmar a inclusão do filme
@@ -102,7 +99,83 @@ public class TesteSala {
                 System.out.println(s.toString());
             }
             System.out.println("Filme cadastrado com sucesso");
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //POR ALGUM MOTIVO QUE NÃO SEI ELE NÃO IDENTIFICA O BOTÃO DE ENVIO COMO UM ELEMENTO CLICÁVEL
+
+//            try{
+//                WebElement botaoEnviar = driver.findElement(By.linkText("Enviar"));
+//                Actions actionProvider = new Actions(driver);
+//                actionProvider.moveToElement(botaoEnviar).build().perform();
+//            } catch (Exception e){
+//                System.out.println("Elemento não localizado");
+//            }
+//            driver.findElement(By.linkText("Enviar")).click();
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            driver.navigate().back();
+            Thread.sleep(2000);
+        } else {
+            System.out.println("Estamos na página errada");
         }
+
+        //clica no item de menu seleciona Filme
+        driver.findElement(By.linkText("Listar uma Sala")).click();
+
+        driver.findElement(By.id("codigo")).sendKeys("5");
+        Thread.sleep(2000);
+
+        Integer codigo = Integer.parseInt(driver.findElement(By.id("codigo")).getAttribute("value"));
+
+        Sala buscaSala = sala.buscarSala(sala.salas, codigo);
+        Thread.sleep(2000);
+        System.out.println(buscaSala);
+
+        driver.findElement(By.xpath("/html/body/form/input[2]")).click();
+        Thread.sleep(2000);
+
+        //altera a variável título para verificação da página
+        titulo = driver.getTitle();
+        if(titulo.equals("Lista Salas")) {
+            System.out.println("Estamos na página correta");
+            driver.findElement(By.id("codigo")).sendKeys("5");
+
+            //JS incluí o atributo readonly no campo "código" do formulário
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            WebElement codigoElement = driver.findElement(By.id("codigo"));
+            js.executeScript("document.getElementById('codigo').setAttribute('readonly',true)", codigoElement);
+
+            driver.findElement(By.id("nome")).sendKeys(buscaSala.getNome());
+            driver.findElement(By.id("capacidade")).sendKeys(String.valueOf(buscaSala.getCapacidade()));
+            driver.findElement(By.id("telefone")).sendKeys(buscaSala.getTelefone_sala());
+
+            WebElement radio1 = driver.findElement(By.id("true"));
+            WebElement radio2 = driver.findElement(By.id("false"));
+
+            //preenche o radio button
+            if (buscaSala.isAcessivel()) {
+                radio1.click();
+            } else {
+                radio2.click();
+            }
+
+            WebElement cb2D = driver.findElement(By.id("2d"));
+            WebElement cb3D = driver.findElement(By.id("3d"));
+            WebElement cbOutros = driver.findElement(By.id("Outros"));
+
+            if(buscaSala.getTipoExibicao().get("2d")){
+                cb2D.click();
+            }
+            if(buscaSala.getTipoExibicao().get("3d")){
+                cb3D.click();
+            }
+            if(buscaSala.getTipoExibicao().get("outros")){
+                cbOutros.click();
+            }
+
+            Thread.sleep(2000);
+        }
+
         Thread.sleep(2000);
         driver.close();
     }

@@ -14,7 +14,7 @@
 <body class="container">
     <h1>Cadastro de novas Salas</h1>
 
-    <form>
+    <form action="./index.html" method="post">
         <label for="codigo" class="form-label">Código: </label>
         <input type="text" id="codigo" name="codigo" class="form-control" required><br>
         <label for="nome" class="form-label">Nome: </label>
@@ -40,7 +40,8 @@
         </fieldset>
         <label for="telefone" class="form-label">Telefone: </label>
         <input type="text" id="telefone" name="telefone" class="form-control"><br>
-        <input type="submit" value="Enviar" class="btn btn-primary">
+
+        <input type="submit" value="Enviar" id="submit" class="btn btn-primary">
     </form>
 </body>
 
