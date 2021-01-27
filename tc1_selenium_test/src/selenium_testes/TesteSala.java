@@ -1,18 +1,22 @@
 package selenium_testes;
 
-import model.Filme;
 import model.Sala;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TesteSala {
 
     public static void main(String[] args) throws InterruptedException {
         Sala sala = new Sala();
+        Map<String, Boolean> tipoExibicao= new HashMap<>();
 
-//        filme.filmes = filme.carregaFilmes(filme.filmes);
+        sala.salas = sala.carregaSalas();
+
 
         //INFORMA O DIRETORIO DO MOTOR CHROME PARA O SELENIUM
         String userPath = System.getProperty("user.dir");
@@ -31,10 +35,10 @@ public class TesteSala {
         driver.findElement(By.linkText("Cadastrar nova Sala")).click();
 
         String titulo = driver.getTitle();
-        if(titulo.equals("Cadastar nova Sala")){
+        if(titulo.equals("Cadastar nova Sala")) {
             System.out.println("Estamos na página correta");
-            driver.findElement(By.id("codigo")).sendKeys("1");
-            driver.findElement(By.id("nome")).sendKeys("Sala 1");
+            driver.findElement(By.id("codigo")).sendKeys("8");
+            driver.findElement(By.id("nome")).sendKeys("Sala 8");
             driver.findElement(By.id("capacidade")).sendKeys("35");
 
             //Check Box
@@ -69,23 +73,36 @@ public class TesteSala {
 
             Thread.sleep(1000);
 
-            //Obtendo dados do novo filme
-//            Filme novofilme = new Filme(
-//                    Integer.parseInt(driver.findElement(By.id("codigo")).getAttribute("value")),
-//                    Integer.parseInt(driver.findElement(By.id("lancamento")).getAttribute("value")),
-//                    driver.findElement(By.id("nome")).getAttribute("value"),
-//                    driver.findElement(By.id("diretor")).getAttribute("value"),
-//                    driver.findElement(By.id("ator")).getAttribute("value")
-//            );
-//
-//            filme.incluirFilme(filme.filmes,novofilme);
-//
-//            //Print no terminal apenas para confirmar a inclusão do filme
-//            for(Filme f : filme.filmes){
-//                System.out.println(f.toString());
-            }
-//            System.out.println("Filme cadastrado com sucesso");
+            //Obtendo dados de uma nova sala
 
+            //Tipos de exibição
+            tipoExibicao.put("2d", cb2D.isSelected());
+            tipoExibicao.put("3d", cb3D.isSelected());
+            tipoExibicao.put("outros", cbOutros.isSelected());
+
+            //Sala acessível
+            Boolean salaAcessivel;
+            salaAcessivel = (radio1.isSelected()) ? true : false;
+
+            Sala novaSala = new Sala(
+                    Integer.parseInt(driver.findElement(By.id("codigo")).getAttribute("value")),
+                    Integer.parseInt(driver.findElement(By.id("capacidade")).getAttribute("value")),
+                    driver.findElement(By.id("nome")).getAttribute("value"),
+                    driver.findElement(By.id("telefone")).getAttribute("value"),
+                    salaAcessivel,
+                    tipoExibicao
+            );
+
+//            System.out.println(novaSala.getTipoExibicao().get("2d"));
+
+            sala.incluirSala(sala.salas, novaSala);
+
+            //Print no terminal apenas para confirmar a inclusão do filme
+            for (Sala s : sala.salas) {
+                System.out.println(s.toString());
+            }
+            System.out.println("Filme cadastrado com sucesso");
+        }
         Thread.sleep(2000);
         driver.close();
     }
