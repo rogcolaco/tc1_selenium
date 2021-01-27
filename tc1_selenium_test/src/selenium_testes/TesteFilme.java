@@ -33,7 +33,7 @@ public class TesteFilme {
 
         String titulo = driver.getTitle();
         if(titulo.equals("Cadastrar Novo Filme")){
-            System.out.println("Estamos na página correta");
+
             driver.findElement(By.id("codigo")).sendKeys("7");
             driver.findElement(By.id("nome")).sendKeys("A Família Addams");
             driver.findElement(By.id("lancamento")).sendKeys("1991");
