@@ -4,7 +4,6 @@ import model.Sala;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
-import sun.font.TextRecord;
 
 import java.util.HashMap;
 import java.util.Map;
