@@ -100,20 +100,14 @@ public class TesteSala {
             }
             System.out.println("Filme cadastrado com sucesso");
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //POR ALGUM MOTIVO QUE NÃO SEI ELE NÃO IDENTIFICA O BOTÃO DE ENVIO COMO UM ELEMENTO CLICÁVEL
+            //Coloquei esse elemento aqui apenas para que o botão aparecesse na tela
+            driver.findElement(By.id("submit")).sendKeys("10");
+            Thread.sleep(500);
 
-//            try{
-//                WebElement botaoEnviar = driver.findElement(By.linkText("Enviar"));
-//                Actions actionProvider = new Actions(driver);
-//                actionProvider.moveToElement(botaoEnviar).build().perform();
-//            } catch (Exception e){
-//                System.out.println("Elemento não localizado");
-//            }
-//            driver.findElement(By.linkText("Enviar")).click();
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////
+            WebElement button = driver.findElement(By.id("submit"));
+            Actions actions = new Actions(driver);
+            actions.moveToElement(button).click().build().perform();
 
-            driver.navigate().back();
             Thread.sleep(2000);
         } else {
             System.out.println("Estamos na página errada");
@@ -137,6 +131,8 @@ public class TesteSala {
         //altera a variável título para verificação da página
         titulo = driver.getTitle();
         if(titulo.equals("Lista Salas")) {
+
+            //Preenche as informações da sala selecionada
             System.out.println("Estamos na página correta");
             driver.findElement(By.id("codigo")).sendKeys("5");
 
@@ -174,6 +170,47 @@ public class TesteSala {
             }
 
             Thread.sleep(2000);
+
+            //Altera dados da sala selecionada
+            driver.findElement(By.id("nome")).sendKeys("Novo nome da Sala");
+            driver.findElement(By.id("capacidade")).sendKeys("1000");
+
+
+            //Alterna o valor dos checkBox
+            cb2D.click();
+            cb3D.click();
+            cbOutros.click();
+
+            tipoExibicao.replace("2d", cb2D.isSelected());
+            tipoExibicao.replace("3d", cb3D.isSelected());
+            tipoExibicao.replace("outros", cbOutros.isSelected());
+
+            //Alternando clicks entre os radio buttons
+            radio2.click();
+
+            driver.findElement(By.id("telefone")).sendKeys("111222333444555666");
+
+            Boolean salaAcessivel;
+            salaAcessivel = (radio1.isSelected()) ? true : false;
+
+            for (Sala s : sala.salas){
+                if(Integer.parseInt(driver.findElement(By.id("codigo")).getAttribute("value")) == s.getCodigo()){
+                    s.setNome(driver.findElement(By.id("nome")).getAttribute("value"));
+                    s.setCapacidade(Integer.parseInt(driver.findElement(By.id("capacidade")).getAttribute("value")));
+                    s.setTipoExibicao(tipoExibicao);
+                    s.setAcessivel(salaAcessivel);
+                    s.setTelefone_sala(driver.findElement(By.id("telefone")).getAttribute("value"));
+                }
+            }
+
+            //Print no terminal para conferir a alteraçao do item
+            for (Sala s : sala.salas){
+                if(Integer.parseInt(driver.findElement(By.id("codigo")).getAttribute("value")) == s.getCodigo()){
+                    System.out.println(s.toString());
+                }
+            }
+
+
         }
 
         Thread.sleep(2000);

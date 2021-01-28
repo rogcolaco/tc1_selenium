@@ -165,23 +165,4 @@ public class Sala {
         return salas;
     }
 
-//    public void alterarSala(ArrayList<Sala> salas, Sala sala){
-//        Scanner scanner = new Scanner(System.in);
-//
-//        for (Sala s : salas) {
-//            if (s.codigo == sala.codigo){
-//                System.out.println("\nInforme a capacidade da sala:");
-//                s.setCapacidade(Integer.parseInt(scanner.nextLine()));
-//                System.out.println("\nInforme o nome dda sala:");
-//                s.setNome(scanner.nextLine());
-//                System.out.println("\nInforme o tipo de exibição da sala:");
-//                s.setTipo_de_exibicao(scanner.nextLine());
-//                System.out.println("\nInforme o telefone da sala:");
-//                s.setTelefone_sala(scanner.nextLine());
-//                System.out.println("\nInforme se existe acessibilidade na sala:");
-//                s.setAcessivel(Boolean.parseBoolean(scanner.nextLine()));
-//                break;
-//            }
-//        }
-//    }
 }
