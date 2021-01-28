@@ -4,6 +4,7 @@ import model.Sala;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import sun.font.TextRecord;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,13 +49,13 @@ public class TesteSala {
             cb2D.click();
             cb3D.click();
             cbOutros.click();
-            Thread.sleep(1000);
+            Thread.sleep(500);
             cb3D.click();
-            Thread.sleep(1000);
+            Thread.sleep(500);
             cbOutros.click();
-            Thread.sleep(1000);
+            Thread.sleep(500);
             cb3D.click();
-            Thread.sleep(1000);
+            Thread.sleep(500);
             cb2D.click();
 
             //Radio Button
@@ -62,9 +63,9 @@ public class TesteSala {
             WebElement radio2 = driver.findElement(By.id("false"));
             //Alternando clicks entre os radio buttons
             radio1.click();
-            Thread.sleep(1000);
+            Thread.sleep(500);
             radio2.click();
-            Thread.sleep(1000);
+            Thread.sleep(500);
             radio1.click();
 
             driver.findElement(By.id("telefone")).sendKeys("123456789");
@@ -113,11 +114,11 @@ public class TesteSala {
             System.out.println("Estamos na página errada");
         }
 
-        //clica no item de menu seleciona Filme
+        //clica no item de menu seleciona Sala
         driver.findElement(By.linkText("Listar uma Sala")).click();
+        Thread.sleep(2000);
 
         driver.findElement(By.id("codigo")).sendKeys("5");
-        Thread.sleep(2000);
 
         Integer codigo = Integer.parseInt(driver.findElement(By.id("codigo")).getAttribute("value"));
 
@@ -172,7 +173,9 @@ public class TesteSala {
             Thread.sleep(2000);
 
             //Altera dados da sala selecionada
+            driver.findElement(By.id("nome")).clear();
             driver.findElement(By.id("nome")).sendKeys("Novo nome da Sala");
+            driver.findElement(By.id("capacidade")).clear();
             driver.findElement(By.id("capacidade")).sendKeys("1000");
 
 
@@ -207,9 +210,92 @@ public class TesteSala {
             for (Sala s : sala.salas){
                 if(Integer.parseInt(driver.findElement(By.id("codigo")).getAttribute("value")) == s.getCodigo()){
                     System.out.println(s.toString());
+                    System.out.println("Dados da sala alterados com sucessos");
                 }
             }
 
+            driver.findElement(By.cssSelector("body > a:nth-child(4)")).sendKeys("10");
+            Thread.sleep(500);
+
+            WebElement button = driver.findElement(By.cssSelector("body > a:nth-child(4)"));
+            Actions actions = new Actions(driver);
+            actions.moveToElement(button).click().build().perform();
+
+        }
+
+        Thread.sleep(2000);
+
+        //clica no item de menu seleciona Filme
+        driver.findElement(By.xpath("/html/body/p[3]/a")).click();
+        Thread.sleep(2000);
+
+        driver.findElement(By.id("codigo")).sendKeys("8");
+        Thread.sleep(2000);
+
+        codigo = Integer.parseInt(driver.findElement(By.id("codigo")).getAttribute("value"));
+
+        buscaSala = sala.buscarSala(sala.salas, codigo);
+        Thread.sleep(2000);
+        System.out.println(buscaSala);
+
+        driver.findElement(By.xpath("/html/body/form/input[2]")).click();
+        Thread.sleep(2000);
+
+        //altera a variável título para verificação da página
+        titulo = driver.getTitle();
+        if(titulo.equals("Lista Salas")){
+            //Preenche as informações da sala selecionada
+            System.out.println("Estamos na página correta");
+            driver.findElement(By.id("codigo")).sendKeys("8");
+
+            //JS incluí o atributo readonly no campo "código" do formulário
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            WebElement codigoElement = driver.findElement(By.id("codigo"));
+            js.executeScript("document.getElementById('codigo').setAttribute('readonly',true)", codigoElement);
+
+            driver.findElement(By.id("nome")).sendKeys(buscaSala.getNome());
+            driver.findElement(By.id("capacidade")).sendKeys(String.valueOf(buscaSala.getCapacidade()));
+            driver.findElement(By.id("telefone")).sendKeys(buscaSala.getTelefone_sala());
+
+            WebElement radio1 = driver.findElement(By.id("true"));
+            WebElement radio2 = driver.findElement(By.id("false"));
+
+            //preenche o radio button
+            if (buscaSala.isAcessivel()) {
+                radio1.click();
+            } else {
+                radio2.click();
+            }
+
+            WebElement cb2D = driver.findElement(By.id("2d"));
+            WebElement cb3D = driver.findElement(By.id("3d"));
+            WebElement cbOutros = driver.findElement(By.id("Outros"));
+
+            if(buscaSala.getTipoExibicao().get("2d")){
+                cb2D.click();
+            }
+            if(buscaSala.getTipoExibicao().get("3d")){
+                cb3D.click();
+            }
+            if(buscaSala.getTipoExibicao().get("outros")){
+                cbOutros.click();
+            }
+
+            Thread.sleep(2000);
+
+            sala.deletaSala(sala.salas,Integer.parseInt(driver.findElement(By.id("codigo")).getAttribute("value")));
+
+            driver.findElement(By.cssSelector("body > a:nth-child(5)")).sendKeys("10");
+            Thread.sleep(500);
+
+            WebElement button = driver.findElement(By.cssSelector("body > a:nth-child(5)"));
+            Actions actions = new Actions(driver);
+            actions.moveToElement(button).click().build().perform();
+
+            //print terminal para verificar que o item foi deletado
+            for (Sala s: sala.salas){
+                System.out.println(s.toString());
+            }
 
         }
 
