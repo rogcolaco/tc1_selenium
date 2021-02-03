@@ -49,5 +49,8 @@ public class NavegacaoMenuFilme {
         Thread.sleep(2000);
 
         driver.navigate().back();
+        Thread.sleep(2000);
+
+        driver.close();
     }
 }
